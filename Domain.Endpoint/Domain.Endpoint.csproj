@@ -45,8 +45,10 @@
     <Compile Include="Entities\BaseEntity.cs" />
     <Compile Include="Entities\Categoria.cs" />
     <Compile Include="Entities\Cliente.cs" />
+    <Compile Include="Entities\Empleado.cs" />
     <Compile Include="Entities\Marca.cs" />
     <Compile Include="Entities\Producto.cs" />
+    <Compile Include="Entities\Proveedor.cs" />
     <Compile Include="Entities\ToDo.cs" />
     <Compile Include="Entities\UnidadMedida.cs" />
     <Compile Include="Interfaces\Repositories\IToDosRepository.cs" />
