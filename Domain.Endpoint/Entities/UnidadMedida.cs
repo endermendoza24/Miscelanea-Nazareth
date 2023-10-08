@@ -8,7 +8,7 @@ namespace Domain.Endpoint.Entities
 {
     public class UnidadMedida
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
         public string Descripcion_Medida { get; set; }
     }
 }

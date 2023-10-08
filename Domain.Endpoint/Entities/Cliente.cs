@@ -8,7 +8,7 @@ namespace Domain.Endpoint.Entities
 {
     public class Cliente
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
         public string Primer_Nombre { get; set; }
         public string  Segundo_Nombre { get; set; }
         public string Primer_Apellido { get; set; }

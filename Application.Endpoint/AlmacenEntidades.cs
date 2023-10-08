@@ -33,7 +33,7 @@ namespace Application.Endpoint
         public void Agregar(T entidad)
         {
             int id = _siguienteId++;
-            typeof(T).GetProperty("ID")?.SetValue(entidad, id);
+            typeof(T).GetProperty("Id")?.SetValue(entidad, id);
             _entidades.Add(entidad);
         }
 
@@ -60,7 +60,7 @@ namespace Application.Endpoint
                 PropertyInfo[] propiedades = typeof(T).GetProperties();
                 foreach (PropertyInfo property in propiedades)
                 {
-                    if (property.Name != "ID") // Evita modificar la propiedad "ID"
+                    if (property.Name != "Id") // Evita modificar la propiedad "ID"
                     {
                         object nuevoValor = property.GetValue(entidadActualizada);
                         if (nuevoValor != null)

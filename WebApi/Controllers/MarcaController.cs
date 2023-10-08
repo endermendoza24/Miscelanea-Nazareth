@@ -12,7 +12,7 @@ namespace WebApi.Controllers
 
         public MarcaController()
         {
-            _marcaStore = new AlmacenEntidades<Marca>(m => m.ID);
+            _marcaStore = new AlmacenEntidades<Marca>(m => m.Id);
         }
 
         [HttpGet]
