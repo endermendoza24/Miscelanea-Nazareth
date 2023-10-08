@@ -9,6 +9,6 @@ namespace Domain.Endpoint.Entities
     public class Categoria
     {
         public int Id { get; set; }
-        public string Descripcion_Marca { get; set; }
+        public string Descripcion_Categoria { get; set; }
     }
 }
