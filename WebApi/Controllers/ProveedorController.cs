@@ -20,15 +20,11 @@ namespace WebApi.Controllers
         {
             try
             {
-                // Obtiene la lista de todos los proveedores
                 List<Proveedor> proveedores = _proveedorStore.ObtenerTodo();
-
-                // Devuelve una respuesta Ok con la lista de proveedores
                 return Ok(proveedores);
             }
             catch (Exception ex)
             {
-                // Si ocurre un error, devuelve una respuesta InternalServerError con el error
                 return InternalServerError(ex);
             }
         }
@@ -38,19 +34,15 @@ namespace WebApi.Controllers
         {
             try
             {
-                // Intenta obtener un proveedor por su ID
                 Proveedor proveedor = _proveedorStore.ObtenerPorId(id);
 
                 if (proveedor == null)
-                    // Si no se encuentra el proveedor, devuelve una respuesta NotFound
                     return NotFound();
 
-                // Si se encuentra el proveedor, devuelve una respuesta Ok con el proveedor
                 return Ok(proveedor);
             }
             catch (Exception ex)
             {
-                // Si ocurre un error, devuelve una respuesta InternalServerError con el error
                 return InternalServerError(ex);
             }
         }
@@ -60,18 +52,12 @@ namespace WebApi.Controllers
         {
             try
             {
-                // Agrega un nuevo proveedor
                 _proveedorStore.Agregar(nuevoProveedor);
-
-                // Obtiene la lista actualizada de proveedores
                 List<Proveedor> proveedores = _proveedorStore.ObtenerTodo();
-
-                // Devuelve una respuesta Ok con la lista de proveedores
                 return Ok(proveedores);
             }
             catch (Exception ex)
             {
-                // Si ocurre un error, devuelve una respuesta InternalServerError con el error
                 return InternalServerError(ex);
             }
         }
@@ -81,18 +67,12 @@ namespace WebApi.Controllers
         {
             try
             {
-                // Intenta actualizar el proveedor por su ID
                 _proveedorStore.Actualizar(id, proveedorActualizado);
-
-                // Obtiene la lista actualizada de proveedores
-                List<Proveedor> proveedores = _proveedorStore.ObtenerTodo();
-
-                // Devuelve una respuesta Ok con la lista de proveedores
-                return Ok(proveedores);
+                Proveedor proveedorActualizadoResult = _proveedorStore.ObtenerPorId(id);
+                return Ok(proveedorActualizadoResult);
             }
             catch (Exception ex)
             {
-                // Si ocurre un error, devuelve una respuesta InternalServerError con el error
                 return InternalServerError(ex);
             }
         }
@@ -102,18 +82,18 @@ namespace WebApi.Controllers
         {
             try
             {
-                // Intenta eliminar el proveedor por su ID
+                Proveedor proveedorEliminado = _proveedorStore.ObtenerPorId(id);
+
+                if (proveedorEliminado == null)
+                {
+                    return NotFound();
+                }
+
                 _proveedorStore.Eliminar(id);
-
-                // Obtiene la lista actualizada de proveedores
-                List<Proveedor> proveedores = _proveedorStore.ObtenerTodo();
-
-                // Devuelve una respuesta Ok con la lista de proveedores
-                return Ok(proveedores);
+                return Ok(proveedorEliminado);
             }
             catch (Exception ex)
             {
-                // Si ocurre un error, devuelve una respuesta InternalServerError con el error
                 return InternalServerError(ex);
             }
         }

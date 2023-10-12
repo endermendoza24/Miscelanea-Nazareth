@@ -20,15 +20,11 @@ namespace WebApi.Controllers
         {
             try
             {
-                // Obtiene la lista de todos los empleados
                 List<Empleado> empleados = _empleadoStore.ObtenerTodo();
-
-                // Devuelve una respuesta Ok con la lista de empleados
                 return Ok(empleados);
             }
             catch (Exception ex)
             {
-                // Si ocurre un error, devuelve una respuesta InternalServerError con el error
                 return InternalServerError(ex);
             }
         }
@@ -38,19 +34,15 @@ namespace WebApi.Controllers
         {
             try
             {
-                // Intenta obtener un empleado por su ID
                 Empleado empleado = _empleadoStore.ObtenerPorId(id);
 
                 if (empleado == null)
-                    // Si no se encuentra el empleado, devuelve una respuesta NotFound
                     return NotFound();
 
-                // Si se encuentra el empleado, devuelve una respuesta Ok con el empleado
                 return Ok(empleado);
             }
             catch (Exception ex)
             {
-                // Si ocurre un error, devuelve una respuesta InternalServerError con el error
                 return InternalServerError(ex);
             }
         }
@@ -60,18 +52,12 @@ namespace WebApi.Controllers
         {
             try
             {
-                // Agrega un nuevo empleado
                 _empleadoStore.Agregar(nuevoEmpleado);
-
-                // Obtiene la lista actualizada de empleados
                 List<Empleado> empleados = _empleadoStore.ObtenerTodo();
-
-                // Devuelve una respuesta Ok con la lista de empleados
                 return Ok(empleados);
             }
             catch (Exception ex)
             {
-                // Si ocurre un error, devuelve una respuesta InternalServerError con el error
                 return InternalServerError(ex);
             }
         }
@@ -81,18 +67,12 @@ namespace WebApi.Controllers
         {
             try
             {
-                // Intenta actualizar el empleado por su ID
                 _empleadoStore.Actualizar(id, empleadoActualizado);
-
-                // Obtiene la lista actualizada de empleados
-                List<Empleado> empleados = _empleadoStore.ObtenerTodo();
-
-                // Devuelve una respuesta Ok con la lista de empleados
-                return Ok(empleados);
+                Empleado empleadoActualizadoResult = _empleadoStore.ObtenerPorId(id);
+                return Ok(empleadoActualizadoResult);
             }
             catch (Exception ex)
             {
-                // Si ocurre un error, devuelve una respuesta InternalServerError con el error
                 return InternalServerError(ex);
             }
         }
@@ -102,18 +82,18 @@ namespace WebApi.Controllers
         {
             try
             {
-                // Intenta eliminar el empleado por su ID
+                Empleado empleadoEliminado = _empleadoStore.ObtenerPorId(id);
+
+                if (empleadoEliminado == null)
+                {
+                    return NotFound();
+                }
+
                 _empleadoStore.Eliminar(id);
-
-                // Obtiene la lista actualizada de empleados
-                List<Empleado> empleados = _empleadoStore.ObtenerTodo();
-
-                // Devuelve una respuesta Ok con la lista de empleados
-                return Ok(empleados);
+                return Ok(empleadoEliminado);
             }
             catch (Exception ex)
             {
-                // Si ocurre un error, devuelve una respuesta InternalServerError con el error
                 return InternalServerError(ex);
             }
         }

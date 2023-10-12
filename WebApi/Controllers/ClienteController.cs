@@ -20,15 +20,11 @@ namespace WebApi.Controllers
         {
             try
             {
-                // Obtiene la lista de todos los clientes
                 List<Cliente> clientes = _clienteStore.ObtenerTodo();
-
-                // Devuelve una respuesta Ok con la lista de clientes
                 return Ok(clientes);
             }
             catch (Exception ex)
             {
-                // Si ocurre un error, devuelve una respuesta InternalServerError con el error
                 return InternalServerError(ex);
             }
         }
@@ -38,19 +34,15 @@ namespace WebApi.Controllers
         {
             try
             {
-                // Intenta obtener un cliente por su ID
                 Cliente cliente = _clienteStore.ObtenerPorId(id);
 
                 if (cliente == null)
-                    // Si no se encuentra el cliente, devuelve una respuesta NotFound
                     return NotFound();
 
-                // Si se encuentra el cliente, devuelve una respuesta Ok con el cliente
                 return Ok(cliente);
             }
             catch (Exception ex)
             {
-                // Si ocurre un error, devuelve una respuesta InternalServerError con el error
                 return InternalServerError(ex);
             }
         }
@@ -60,18 +52,12 @@ namespace WebApi.Controllers
         {
             try
             {
-                // Agrega un nuevo cliente
                 _clienteStore.Agregar(nuevoCliente);
-
-                // Obtiene la lista actualizada de clientes
                 List<Cliente> clientes = _clienteStore.ObtenerTodo();
-
-                // Devuelve una respuesta Ok con la lista de clientes
                 return Ok(clientes);
             }
             catch (Exception ex)
             {
-                // Si ocurre un error, devuelve una respuesta InternalServerError con el error
                 return InternalServerError(ex);
             }
         }
@@ -81,18 +67,12 @@ namespace WebApi.Controllers
         {
             try
             {
-                // Intenta actualizar el cliente por su ID
                 _clienteStore.Actualizar(id, clienteActualizado);
-
-                // Obtiene la lista actualizada de clientes
-                List<Cliente> clientes = _clienteStore.ObtenerTodo();
-
-                // Devuelve una respuesta Ok con la lista de clientes
-                return Ok(clientes);
+                Cliente clienteActualizadoResult = _clienteStore.ObtenerPorId(id);
+                return Ok(clienteActualizadoResult);
             }
             catch (Exception ex)
             {
-                // Si ocurre un error, devuelve una respuesta InternalServerError con el error
                 return InternalServerError(ex);
             }
         }
@@ -102,18 +82,18 @@ namespace WebApi.Controllers
         {
             try
             {
-                // Intenta eliminar el cliente por su ID
+                Cliente clienteEliminado = _clienteStore.ObtenerPorId(id);
+
+                if (clienteEliminado == null)
+                {
+                    return NotFound();
+                }
+
                 _clienteStore.Eliminar(id);
-
-                // Obtiene la lista actualizada de clientes
-                List<Cliente> clientes = _clienteStore.ObtenerTodo();
-
-                // Devuelve una respuesta Ok con la lista de clientes
-                return Ok(clientes);
+                return Ok(clienteEliminado);
             }
             catch (Exception ex)
             {
-                // Si ocurre un error, devuelve una respuesta InternalServerError con el error
                 return InternalServerError(ex);
             }
         }

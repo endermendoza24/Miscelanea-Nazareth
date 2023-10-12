@@ -20,15 +20,11 @@ namespace WebApi.Controllers
         {
             try
             {
-                // Obtiene la lista de todas las categorías
                 List<Categoria> categorias = _categoriaStore.ObtenerTodo();
-
-                // Devuelve una respuesta Ok con la lista de categorías
                 return Ok(categorias);
             }
             catch (Exception ex)
             {
-                // Si ocurre un error, devuelve una respuesta InternalServerError con el error
                 return InternalServerError(ex);
             }
         }
@@ -38,19 +34,15 @@ namespace WebApi.Controllers
         {
             try
             {
-                // Intenta obtener una categoría por su ID
                 Categoria categoria = _categoriaStore.ObtenerPorId(id);
 
                 if (categoria == null)
-                    // Si no se encuentra la categoría, devuelve una respuesta NotFound
                     return NotFound();
 
-                // Si se encuentra la categoría, devuelve una respuesta Ok con la categoría
                 return Ok(categoria);
             }
             catch (Exception ex)
             {
-                // Si ocurre un error, devuelve una respuesta InternalServerError con el error
                 return InternalServerError(ex);
             }
         }
@@ -60,18 +52,12 @@ namespace WebApi.Controllers
         {
             try
             {
-                // Agrega una nueva categoría
                 _categoriaStore.Agregar(nuevaCategoria);
-
-                // Obtiene la lista actualizada de categorías
                 List<Categoria> categorias = _categoriaStore.ObtenerTodo();
-
-                // Devuelve una respuesta Ok con la lista de categorías
                 return Ok(categorias);
             }
             catch (Exception ex)
             {
-                // Si ocurre un error, devuelve una respuesta InternalServerError con el error
                 return InternalServerError(ex);
             }
         }
@@ -81,18 +67,12 @@ namespace WebApi.Controllers
         {
             try
             {
-                // Intenta actualizar la categoría por su ID
                 _categoriaStore.Actualizar(id, categoriaActualizada);
-
-                // Obtiene la lista actualizada de categorías
-                List<Categoria> categorias = _categoriaStore.ObtenerTodo();
-
-                // Devuelve una respuesta Ok con la lista de categorías
-                return Ok(categorias);
+                Categoria categoriaActualizadaResult = _categoriaStore.ObtenerPorId(id);
+                return Ok(categoriaActualizadaResult);
             }
             catch (Exception ex)
             {
-                // Si ocurre un error, devuelve una respuesta InternalServerError con el error
                 return InternalServerError(ex);
             }
         }
@@ -102,18 +82,18 @@ namespace WebApi.Controllers
         {
             try
             {
-                // Intenta eliminar la categoría por su ID
+                Categoria categoriaEliminada = _categoriaStore.ObtenerPorId(id);
+
+                if (categoriaEliminada == null)
+                {
+                    return NotFound();
+                }
+
                 _categoriaStore.Eliminar(id);
-
-                // Obtiene la lista actualizada de categorías
-                List<Categoria> categorías = _categoriaStore.ObtenerTodo();
-
-                // Devuelve una respuesta Ok con la lista de categorías
-                return Ok(categorías);
+                return Ok(categoriaEliminada);
             }
             catch (Exception ex)
             {
-                // Si ocurre un error, devuelve una respuesta InternalServerError con el error
                 return InternalServerError(ex);
             }
         }

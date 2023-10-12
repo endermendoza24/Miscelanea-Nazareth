@@ -20,15 +20,11 @@ namespace WebApi.Controllers
         {
             try
             {
-                // Obtiene la lista de todos los productos
                 List<Producto> productos = _productoStore.ObtenerTodo();
-
-                // Devuelve una respuesta Ok con la lista de productos
                 return Ok(productos);
             }
             catch (Exception ex)
             {
-                // Si ocurre un error, devuelve una respuesta InternalServerError con el error
                 return InternalServerError(ex);
             }
         }
@@ -38,19 +34,15 @@ namespace WebApi.Controllers
         {
             try
             {
-                // Intenta obtener un producto por su ID
                 Producto producto = _productoStore.ObtenerPorId(id);
 
                 if (producto == null)
-                    // Si no se encuentra el producto, devuelve una respuesta NotFound
                     return NotFound();
 
-                // Si se encuentra el producto, devuelve una respuesta Ok con el producto
                 return Ok(producto);
             }
             catch (Exception ex)
             {
-                // Si ocurre un error, devuelve una respuesta InternalServerError con el error
                 return InternalServerError(ex);
             }
         }
@@ -60,18 +52,12 @@ namespace WebApi.Controllers
         {
             try
             {
-                // Agrega un nuevo producto
                 _productoStore.Agregar(nuevoProducto);
-
-                // Obtiene la lista actualizada de productos
                 List<Producto> productos = _productoStore.ObtenerTodo();
-
-                // Devuelve una respuesta Ok con la lista de productos
                 return Ok(productos);
             }
             catch (Exception ex)
             {
-                // Si ocurre un error, devuelve una respuesta InternalServerError con el error
                 return InternalServerError(ex);
             }
         }
@@ -81,18 +67,12 @@ namespace WebApi.Controllers
         {
             try
             {
-                // Intenta actualizar el producto por su ID
                 _productoStore.Actualizar(id, productoActualizado);
-
-                // Obtiene la lista actualizada de productos
-                List<Producto> productos = _productoStore.ObtenerTodo();
-
-                // Devuelve una respuesta Ok con la lista de productos
-                return Ok(productos);
+                Producto productoActualizadoResult = _productoStore.ObtenerPorId(id);
+                return Ok(productoActualizadoResult);
             }
             catch (Exception ex)
             {
-                // Si ocurre un error, devuelve una respuesta InternalServerError con el error
                 return InternalServerError(ex);
             }
         }
@@ -102,18 +82,18 @@ namespace WebApi.Controllers
         {
             try
             {
-                // Intenta eliminar el producto por su ID
+                Producto productoEliminado = _productoStore.ObtenerPorId(id);
+
+                if (productoEliminado == null)
+                {
+                    return NotFound();
+                }
+
                 _productoStore.Eliminar(id);
-
-                // Obtiene la lista actualizada de productos
-                List<Producto> productos = _productoStore.ObtenerTodo();
-
-                // Devuelve una respuesta Ok con la lista de productos
-                return Ok(productos);
+                return Ok(productoEliminado);
             }
             catch (Exception ex)
             {
-                // Si ocurre un error, devuelve una respuesta InternalServerError con el error
                 return InternalServerError(ex);
             }
         }
