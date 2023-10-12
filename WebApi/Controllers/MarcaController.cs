@@ -84,11 +84,11 @@ namespace WebApi.Controllers
                 // Intenta actualizar la marca por su ID
                 _marcaStore.Actualizar(id, marcaActualizada);
 
-                // Obtiene la lista actualizada de marcas
-                List<Marca> marcas = _marcaStore.ObtenerTodo();
+                // Obtiene la marca actualizada
+                Marca marcaActualizadaResult = _marcaStore.ObtenerPorId(id); // Cambio de nombre de la variable
 
-                // Devuelve una respuesta Ok con la lista de marcas
-                return Ok(marcas);
+                // Devuelve una respuesta Ok con la marca actualizada
+                return Ok(marcaActualizadaResult);
             }
             catch (Exception ex)
             {
@@ -96,6 +96,8 @@ namespace WebApi.Controllers
                 return InternalServerError(ex);
             }
         }
+
+
 
         [HttpDelete]
         public IHttpActionResult EliminarMarca(int id)
@@ -103,13 +105,18 @@ namespace WebApi.Controllers
             try
             {
                 // Intenta eliminar la marca por su ID
+                Marca marcaEliminada = _marcaStore.ObtenerPorId(id);
+
+                if (marcaEliminada == null)
+                {
+                    // Si no se encuentra la marca, devuelve una respuesta NotFound
+                    return NotFound();
+                }
+
                 _marcaStore.Eliminar(id);
 
-                // Obtiene la lista actualizada de marcas
-                List<Marca> marcas = _marcaStore.ObtenerTodo();
-
-                // Devuelve una respuesta Ok con la lista de marcas
-                return Ok(marcas);
+                // Devuelve una respuesta Ok con la marca eliminada
+                return Ok(marcaEliminada);
             }
             catch (Exception ex)
             {
@@ -117,5 +124,6 @@ namespace WebApi.Controllers
                 return InternalServerError(ex);
             }
         }
+
     }
 }
